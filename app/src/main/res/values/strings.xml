@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CircleTheCat</string>
+    <string name="title_activity_main">Circle The Cat!</string>
+    <string name="action_reset">Reset</string>
+</resources>
