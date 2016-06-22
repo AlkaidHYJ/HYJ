@@ -32,7 +32,7 @@ public class BoardAI {
         int probabitlitySelector = 1;
         Random r = new Random();
         // TODO(alhaad): Break into a functions.
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < Board.mBoardEdgeSize; i++) {
             int j = 0;
             ArrayList<Integer> path = aStarPath(i, j);
             if (path.size() == 0) {
@@ -48,7 +48,7 @@ public class BoardAI {
                 probabitlitySelector += 1;
             }
 
-            j = 9;
+            j = Board.mBoardEdgeSize - 1;
             path = aStarPath(i, j);
             if (path.size() == 0) {
                 continue;
@@ -63,7 +63,7 @@ public class BoardAI {
                 probabitlitySelector += 1;
             }
         }
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < Board.mBoardEdgeSize; j++) {
             int i = 0;
             ArrayList<Integer> path = aStarPath(i, j);
             if (path.size() == 0) {
@@ -79,7 +79,7 @@ public class BoardAI {
                 probabitlitySelector += 1;
             }
 
-            i = 9;
+            i = Board.mBoardEdgeSize - 1;
             path = aStarPath(i, j);
             if (path.size() == 0) {
                 continue;
@@ -140,10 +140,10 @@ public class BoardAI {
         }
 
         private void maybeAdd(int xPos, int yPos, int xDest, int yDest, ArrayList<Node> neighbours) {
-            if (xPos < 0 || xPos > 9) {
+            if (xPos < 0 || xPos >= Board.mBoardEdgeSize) {
                 return;
             }
-            if (yPos < 0 || yPos > 9) {
+            if (yPos < 0 || yPos >= Board.mBoardEdgeSize) {
                 return;
             }
             if (mBoard[xPos][yPos]) {
@@ -327,7 +327,7 @@ public class BoardAI {
 
 
     private boolean checkForLoss() {
-        if (mXCatPos <= 0 || mXCatPos >= 9 || mYCatPos <=0 || mYCatPos >=9 ) {
+        if (mXCatPos <= 0 || mXCatPos >= Board.mBoardEdgeSize - 1 || mYCatPos <=0 || mYCatPos >= Board.mBoardEdgeSize - 1) {
             return true;
         }
         return false;

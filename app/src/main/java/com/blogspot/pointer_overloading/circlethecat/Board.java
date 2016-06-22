@@ -21,17 +21,20 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Board extends SurfaceView {
     final SurfaceHolder mSurfaceHolder;
+    // The number of tiles on a square board. Prefer an odd number.
+    final static int mBoardEdgeSize = 11;
     final Boolean[][] mBoardContent = new Boolean[][]{
-            { false, false, false, false, false, false, false, false, false, false },
-            { false, false, false, false, false, false, false, false, false, false },
-            { false, false, false, false, false, false, false, false, false, false },
-            { false, false, false, false, false, false, false, false, false, false },
-            { false, false, false, false, false, false, false, false, false, false },
-            { false, false, false, false, false, false, false, false, false, false },
-            { false, false, false, false, false, false, false, false, false, false },
-            { false, false, false, false, false, false, false, false, false, false },
-            { false, false, false, false, false, false, false, false, false, false },
-            { false, false, false, false, false, false, false, false, false, false }
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false },
+            { false, false, false, false, false, false, false, false, false, false, false }
     };
     private Queue<Pair> mTouchQueue;
     private final Lock mLock;
@@ -56,8 +59,8 @@ public class Board extends SurfaceView {
     private void initializeBoard() {
         mCat = new Cat(mCatBitmap);
         Random r = new Random();
-        for (int i = 0; i < 10; i++) {
-            mBoardContent[r.nextInt(10)][r.nextInt(10)] = true;
+        for (int i = 0; i < mBoardEdgeSize; i++) {
+            mBoardContent[r.nextInt(mBoardEdgeSize)][r.nextInt(mBoardEdgeSize)] = true;
         }
         mBoardContent[4][5] = false;
     }
@@ -66,8 +69,8 @@ public class Board extends SurfaceView {
         pause();
         mTouchQueue = new LinkedList<Pair>();
         mHasWon = false;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < mBoardEdgeSize; i++) {
+            for (int j = 0; j < mBoardEdgeSize; j++) {
                 mBoardContent[i][j] = false;
             }
         }
@@ -156,7 +159,7 @@ public class Board extends SurfaceView {
 
     private void processTouchEvents(Canvas canvas, float xTrans, float yTrans) {
         float boardSize = Math.min(canvas.getWidth(), canvas.getHeight());
-        float rectBoundSize = (float) (boardSize / 10.5);
+        float rectBoundSize = (float) (boardSize / ((float) mBoardEdgeSize + 0.5));
         mLock.lock();
         while (!mTouchQueue.isEmpty()) {
             Pair p = mTouchQueue.remove();
@@ -173,7 +176,7 @@ public class Board extends SurfaceView {
                 i = (int) ((x / rectBoundSize));
             }
 
-            if (i < 0 || i > 9 || j < 0 || j > 9) {
+            if (i < 0 || i >= mBoardEdgeSize || j < 0 || j >= mBoardEdgeSize) {
                 continue;
             }
 
@@ -197,7 +200,7 @@ public class Board extends SurfaceView {
 
     private void drawCircle(Canvas canvas, int x, int y, Boolean isSelected) {
         float boardSize = Math.min(canvas.getWidth(), canvas.getHeight());
-        float rectBoundSize = (float) (boardSize / 10.5);
+        float rectBoundSize = (float) (boardSize / ((float) mBoardEdgeSize + 0.5));
         float centreX = x * rectBoundSize + (rectBoundSize / 2);
         float centreY = y * rectBoundSize + (rectBoundSize / 2);
         if (y % 2 == 1) {

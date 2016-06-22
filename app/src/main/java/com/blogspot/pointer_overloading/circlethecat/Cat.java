@@ -27,7 +27,7 @@ public class Cat {
     private final Bitmap mFlippedBitmap;
 
     public Cat(Bitmap bitmap) {
-        mX = 4;
+        mX = 5;
         mY = 5;
         mDirection = 0;
         mActionNumber = 0;
@@ -122,7 +122,7 @@ public class Cat {
 
         // Compute destination Rect.
         float boardSize = Math.min(canvas.getWidth(), canvas.getHeight());
-        float rectBoundSize = (float) (boardSize / 10.5);
+        float rectBoundSize = (float) (boardSize / ((float) Board.mBoardEdgeSize + 0.5));
         float xSpeed, ySpeed;
         if (mDirection == 0) {
             xSpeed = (float) 0.5;
