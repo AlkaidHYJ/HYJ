@@ -12,11 +12,11 @@ import java.util.Random;
  * Created by alhaad on 8/8/15.
  */
 public class BoardAI {
-    private final Boolean[][] mBoard;
+    private final boolean[][] mBoard;
     private final int mXCatPos;
     private final int mYCatPos;
 
-    BoardAI(Boolean[][] board, int xCatPos, int yCatPos) {
+    BoardAI(boolean[][] board, int xCatPos, int yCatPos) {
         mBoard = board;
         mXCatPos = xCatPos;
         mYCatPos = yCatPos;
@@ -32,7 +32,7 @@ public class BoardAI {
         int probabitlitySelector = 1;
         Random r = new Random();
         // TODO(alhaad): Break into a functions.
-        for (int i = 0; i < Board.mBoardEdgeSize; i++) {
+        for (int i = 0; i < Board.BOARD_EDGE_SIZE; i++) {
             int j = 0;
             ArrayList<Integer> path = aStarPath(i, j);
             if (path.size() == 0) {
@@ -48,7 +48,7 @@ public class BoardAI {
                 probabitlitySelector += 1;
             }
 
-            j = Board.mBoardEdgeSize - 1;
+            j = Board.BOARD_EDGE_SIZE - 1;
             path = aStarPath(i, j);
             if (path.size() == 0) {
                 continue;
@@ -63,7 +63,7 @@ public class BoardAI {
                 probabitlitySelector += 1;
             }
         }
-        for (int j = 0; j < Board.mBoardEdgeSize; j++) {
+        for (int j = 0; j < Board.BOARD_EDGE_SIZE; j++) {
             int i = 0;
             ArrayList<Integer> path = aStarPath(i, j);
             if (path.size() == 0) {
@@ -79,7 +79,7 @@ public class BoardAI {
                 probabitlitySelector += 1;
             }
 
-            i = Board.mBoardEdgeSize - 1;
+            i = Board.BOARD_EDGE_SIZE - 1;
             path = aStarPath(i, j);
             if (path.size() == 0) {
                 continue;
@@ -140,10 +140,10 @@ public class BoardAI {
         }
 
         private void maybeAdd(int xPos, int yPos, int xDest, int yDest, ArrayList<Node> neighbours) {
-            if (xPos < 0 || xPos >= Board.mBoardEdgeSize) {
+            if (xPos < 0 || xPos >= Board.BOARD_EDGE_SIZE) {
                 return;
             }
-            if (yPos < 0 || yPos >= Board.mBoardEdgeSize) {
+            if (yPos < 0 || yPos >= Board.BOARD_EDGE_SIZE) {
                 return;
             }
             if (mBoard[xPos][yPos]) {
@@ -327,7 +327,7 @@ public class BoardAI {
 
 
     private boolean checkForLoss() {
-        if (mXCatPos <= 0 || mXCatPos >= Board.mBoardEdgeSize - 1 || mYCatPos <=0 || mYCatPos >= Board.mBoardEdgeSize - 1) {
+        if (mXCatPos <= 0 || mXCatPos >= Board.BOARD_EDGE_SIZE - 1 || mYCatPos <=0 || mYCatPos >= Board.BOARD_EDGE_SIZE - 1) {
             return true;
         }
         return false;

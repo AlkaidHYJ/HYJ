@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Pair;
+import androidx.core.util.Pair;
 
 /**
  * Created by alhaad on 8/2/15.
@@ -21,8 +21,8 @@ public class Cat {
 
     // 0-8 depending on the movement we want.
     private int mActionNumber;
-    private Boolean mIsAnimating;
-    private Boolean mHasEscaped;
+    private boolean mIsAnimating;
+    private boolean mHasEscaped;
     private final Bitmap mBitmap;
     private final Bitmap mFlippedBitmap;
 
@@ -78,13 +78,14 @@ public class Cat {
         }
     }
 
-    public Boolean isAnimating() {
+    public boolean isAnimating() {
         return mIsAnimating;
     }
 
-    public Pair position() {
-        return new Pair(mX, mY);
+    public Pair<Integer, Integer> position() {
+        return new Pair<>(mX, mY);
     }
+
     public void draw(Canvas canvas) {
         // Update action number.
         if (mIsAnimating) {
@@ -122,7 +123,7 @@ public class Cat {
 
         // Compute destination Rect.
         float boardSize = Math.min(canvas.getWidth(), canvas.getHeight());
-        float rectBoundSize = (float) (boardSize / ((float) Board.mBoardEdgeSize + 0.5));
+        float rectBoundSize = (float) (boardSize / ((float) Board.BOARD_EDGE_SIZE + 0.5));
         float xSpeed, ySpeed;
         if (mDirection == 0) {
             xSpeed = (float) 0.5;
@@ -171,6 +172,5 @@ public class Cat {
             bitmap = mBitmap;
         }
         canvas.drawBitmap(bitmap, src, dest, null);
-
     }
 }
